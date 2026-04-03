@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLoaderData, useParams } from 'react-router';
+import { addToStoredDB } from '../../Utility/AddToDb';
 
 const BookDetails = () => {
     const { id } = useParams();
@@ -7,7 +8,12 @@ const BookDetails = () => {
     const data = useLoaderData();
     const singleBook = data.find(book => book.bookId === bookId);
     const { bookName, image, author, category} = singleBook;
-    console.log(singleBook);
+    // console.log(singleBook);
+
+    const handleMarkAsRead = id=>{
+        addToStoredDB(id);
+    }
+
     return (
         <div className=' mx-auto flex items-center justify-around mt-10 p-6 h-[711px] gap-[48px] bg-white '>
             <div className=' bg-[#fff1db] rounded-2xl shadow-lg'>
@@ -19,7 +25,7 @@ const BookDetails = () => {
                 <p className='text-lg text-gray-700 my-[40px]'>Category: {category}</p>
                 {/* <p className='text-small text-gray-700 m-w-[549px] '>Review: {review}</p> */}
                 <div className='flex gap-4'>
-                    <button className="btn btn-neutral btn-outline">Mark as Read</button>
+                    <button onClick={()=>handleMarkAsRead(id)} className="btn btn-neutral btn-outline">Mark as Read</button>
                     <button className="btn btn-active btn-info text-white">Add to WishList</button>
                 </div>
 
