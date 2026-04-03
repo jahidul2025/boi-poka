@@ -1,16 +1,25 @@
 import React from 'react';
 import { useLoaderData, useParams } from 'react-router';
 import { addToStoredDB } from '../../Utility/AddToDb';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 const BookDetails = () => {
     const { id } = useParams();
     const bookId = parseInt(id);
     const data = useLoaderData();
     const singleBook = data.find(book => book.bookId === bookId);
-    const { bookName, image, author, category} = singleBook;
+    const { bookName, image, author, category } = singleBook;
     // console.log(singleBook);
 
-    const handleMarkAsRead = id=>{
+    const handleMarkAsRead = id => {
+        MySwal.fire({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success"
+        });
         addToStoredDB(id);
     }
 
@@ -25,7 +34,7 @@ const BookDetails = () => {
                 <p className='text-lg text-gray-700 my-[40px]'>Category: {category}</p>
                 {/* <p className='text-small text-gray-700 m-w-[549px] '>Review: {review}</p> */}
                 <div className='flex gap-4'>
-                    <button onClick={()=>handleMarkAsRead(id)} className="btn btn-neutral btn-outline">Mark as Read</button>
+                    <button onClick={() => handleMarkAsRead(id)} className="btn btn-neutral btn-outline">Mark as Read</button>
                     <button className="btn btn-active btn-info text-white">Add to WishList</button>
                 </div>
 
